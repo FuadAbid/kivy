@@ -457,7 +457,6 @@ __all__ = (
 from sys import platform
 from os import environ
 from functools import wraps, partial
-from kivy.context import register_context
 from kivy.config import Config
 from kivy.logger import Logger
 from time import perf_counter as _default_time
@@ -1161,8 +1160,6 @@ else:
             '{} is not a valid kivy clock. Valid clocks are {}'.format(
                 _clk, sorted(_classes.keys())))
 
-    Clock: ClockBase = register_context(
-        'Clock', _classes[_clk],
-        async_lib=environ.get('KIVY_EVENTLOOP', 'asyncio'))
+    Clock = _classes[_clk](async_lib=environ.get('KIVY_EVENTLOOP', 'asyncio'))
     '''The kivy Clock instance. See module documentation for details.
     '''
